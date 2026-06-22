@@ -1,5 +1,4 @@
 import './styles.css';
-import 'react-day-picker/dist/style.css';
 
 export const metadata = {
   title: 'Room Booking',

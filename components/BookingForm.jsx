@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { DayPicker } from 'react-day-picker';
 import { supabase } from '@/lib/supabaseClient';
 import { nightsBetween } from '@/lib/bookingRules';
 
@@ -18,25 +17,6 @@ function loadRazorpayScript() {
 
 function areRangesOverlapping(startA, endA, startB, endB) {
   return startA < endB && endA > startB;
-}
-
-function parseDateString(value) {
-  if (!value) return undefined;
-  const [year, month, day] = value.split('-').map(Number);
-  return new Date(year, month - 1, day);
-}
-
-function formatDateString(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-function addDays(date, days) {
-  const next = new Date(date);
-  next.setDate(next.getDate() + days);
-  return next;
 }
 
 export default function BookingForm() {
@@ -60,27 +40,6 @@ export default function BookingForm() {
   const selectedRoom = rooms.find((room) => String(room.id) === String(form.room_id));
   const nights = form.check_in_date && form.check_out_date ? nightsBetween(form.check_in_date, form.check_out_date) : 0;
   const total = selectedRoom && nights > 0 ? nights * Number(selectedRoom.price_per_night) : 0;
-  const selectedDateRange = {
-    from: parseDateString(form.check_in_date),
-    to: form.check_out_date ? addDays(parseDateString(form.check_out_date), -1) : undefined
-  };
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const disabledDateMatchers = [
-    { before: today },
-    ...blockedRanges
-      .map((range) => {
-        const from = parseDateString(range.start);
-        const endDate = parseDateString(range.end);
-        if (!from || !endDate) return null;
-        const to = addDays(endDate, -1);
-        if (!from || !to || to < from) return null;
-        return { from, to };
-      })
-      .filter(Boolean)
-  ];
 
   useEffect(() => {
     async function loadRooms() {
@@ -140,23 +99,6 @@ export default function BookingForm() {
 
   function updateField(event) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
-  }
-
-  function updateDateRange(range) {
-    if (!range?.from) {
-      setForm((current) => ({
-        ...current,
-        check_in_date: '',
-        check_out_date: ''
-      }));
-      return;
-    }
-
-    setForm((current) => ({
-      ...current,
-      check_in_date: formatDateString(range.from),
-      check_out_date: range.to ? formatDateString(addDays(range.to, 1)) : ''
-    }));
   }
 
   async function saveBooking(extra = {}) {
@@ -268,22 +210,23 @@ export default function BookingForm() {
         </select>
       </label>
       <div className="grid-two">
-        <label className="calendar-label">Select stay dates
-          <DayPicker
-            mode="range"
-            numberOfMonths={2}
-            selected={selectedDateRange}
-            onSelect={updateDateRange}
-            disabled={disabledDateMatchers}
-            modifiersClassNames={{
-              disabled: 'rdp-day-blocked'
-            }}
-            required
-          />
+        <label>Check-in
+          <input type="date" name="check_in_date" value={form.check_in_date} onChange={updateField} required />
+        </label>
+        <label>Check-out
+          <input type="date" name="check_out_date" value={form.check_out_date} onChange={updateField} required />
         </label>
       </div>
-      <input type="hidden" name="check_in_date" value={form.check_in_date} required readOnly />
-      <input type="hidden" name="check_out_date" value={form.check_out_date} required readOnly />
+      {blockedRanges.length > 0 && (
+        <div className="blocked-box">
+          <h3>Unavailable dates</h3>
+          <div className="blocked-list">
+            {blockedRanges.map((range, index) => (
+              <span key={index}>{range.start} to {range.end}</span>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="grid-two">
         <label>Guest name
           <input name="guest_name" value={form.guest_name} onChange={updateField} required />

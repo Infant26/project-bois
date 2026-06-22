@@ -23,27 +23,10 @@ label { display: flex; flex-direction: column; gap: 8px; font-weight: 700; color
 input, select, textarea { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; background: white; font: inherit; color: var(--text); }
 textarea { resize: vertical; }
 .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.calendar-label { grid-column: 1 / -1; }
-.calendar-label .rdp-root {
-  --rdp-accent-color: var(--accent);
-  --rdp-accent-background-color: #efe2d5;
-  margin-top: 4px;
-  width: 100%;
-}
-.calendar-label .rdp-months { justify-content: flex-start; }
-.calendar-label .rdp-day_button { border-radius: 999px; }
-.calendar-label .rdp-day-blocked .rdp-day_button {
-  color: #9f8b7c;
-  text-decoration: line-through;
-  background: repeating-linear-gradient(
-    -45deg,
-    #f3e1d3,
-    #f3e1d3 6px,
-    #f9eee4 6px,
-    #f9eee4 12px
-  );
-  cursor: not-allowed;
-}
+.blocked-box { border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; background: #fff7ef; }
+.blocked-box h3 { margin: 0 0 10px; font-size: 14px; color: var(--accent-dark); }
+.blocked-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.blocked-list span { padding: 6px 10px; border-radius: 999px; background: #f3e1d3; color: #8d7160; text-decoration: line-through; font-size: 13px; }
 .price-box { display: flex; justify-content: space-between; align-items: center; border: 1px dashed var(--accent); padding: 16px; border-radius: 16px; margin: 18px 0; background: #fff5e8; }
 .price-box strong { font-size: 24px; }
 button { border: 0; border-radius: 999px; padding: 14px 22px; background: var(--accent); color: white; font-weight: 800; cursor: pointer; }
@@ -63,5 +46,4 @@ th { background: #efe2d5; }
 @media (max-width: 700px) {
   .grid-two { grid-template-columns: 1fr; }
   .content { margin-top: -40px; }
-  .calendar-label .rdp-months { flex-direction: column; }
 }
