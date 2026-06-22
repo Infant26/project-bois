@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 import { nightsBetween, validateBookingPayload } from '@/lib/bookingRules';
+import { sendOwnerBookingRequestEmail } from '@/lib/emailServer';
 
 export async function POST(request) {
   try {
@@ -62,11 +63,17 @@ export async function POST(request) {
 
     if (insertError) throw insertError;
 
+    const bookingWithRoomName = {
+      ...booking,
+      room_name: booking.rooms?.name
+    };
+
+    sendOwnerBookingRequestEmail(bookingWithRoomName).catch((emailError) => {
+      console.warn('Owner booking request email failed:', emailError);
+    });
+
     return NextResponse.json({
-      booking: {
-        ...booking,
-        room_name: booking.rooms?.name
-      }
+      booking: bookingWithRoomName
     });
   } catch (error) {
     console.error(error);

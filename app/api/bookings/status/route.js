@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
+import { sendGuestBookingConfirmedEmail } from '@/lib/emailServer';
 
 export async function PATCH(request) {
   try {
@@ -13,15 +14,38 @@ export async function PATCH(request) {
     }
 
     const supabase = getSupabaseAdmin();
+
+    const { data: currentBooking, error: currentError } = await supabase
+      .from('bookings')
+      .select('*, rooms(name)')
+      .eq('id', id)
+      .single();
+
+    if (currentError || !currentBooking) {
+      return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+    }
+
     const { data, error } = await supabase
       .from('bookings')
       .update({ booking_status })
       .eq('id', id)
-      .select('id');
+      .select('*, rooms(name)')
+      .single();
 
     if (error) throw error;
 
-    return NextResponse.json({ success: true, booking: data?.[0] || null });
+    const updatedBooking = {
+      ...data,
+      room_name: data.rooms?.name
+    };
+
+    if (currentBooking.booking_status !== 'confirmed' && booking_status === 'confirmed') {
+      sendGuestBookingConfirmedEmail(updatedBooking).catch((emailError) => {
+        console.warn('Guest confirmation email failed:', emailError);
+      });
+    }
+
+    return NextResponse.json({ success: true, booking: updatedBooking });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Unable to update booking status' }, { status: 500 });

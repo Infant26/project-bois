@@ -23,16 +23,32 @@ label { display: flex; flex-direction: column; gap: 8px; font-weight: 700; color
 input, select, textarea { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; background: white; font: inherit; color: var(--text); }
 textarea { resize: vertical; }
 .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.calendar-label { grid-column: 1 / -1; }
+.calendar-label .rdp-root {
+  --rdp-accent-color: var(--accent);
+  --rdp-accent-background-color: #efe2d5;
+  margin-top: 4px;
+  width: 100%;
+}
+.calendar-label .rdp-months { justify-content: flex-start; }
+.calendar-label .rdp-day_button { border-radius: 999px; }
+.calendar-label .rdp-day-blocked .rdp-day_button {
+  color: #9f8b7c;
+  text-decoration: line-through;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f3e1d3,
+    #f3e1d3 6px,
+    #f9eee4 6px,
+    #f9eee4 12px
+  );
+  cursor: not-allowed;
+}
 .price-box { display: flex; justify-content: space-between; align-items: center; border: 1px dashed var(--accent); padding: 16px; border-radius: 16px; margin: 18px 0; background: #fff5e8; }
 .price-box strong { font-size: 24px; }
 button { border: 0; border-radius: 999px; padding: 14px 22px; background: var(--accent); color: white; font-weight: 800; cursor: pointer; }
 button:hover { background: var(--accent-dark); }
 button:disabled { opacity: .6; cursor: not-allowed; }
-.blocked-box { border: 1px solid var(--border); border-radius: 18px; background: #fff8ef; padding: 16px; margin-bottom: 18px; }
-.blocked-box h3 { margin: 0 0 10px; font-size: 15px; color: var(--accent-dark); }
-.blocked-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.blocked-list span { display: inline-block; padding: 8px 12px; border-radius: 999px; background: #f5dfd1; color: var(--accent-dark); font-size: 13px; }
-.note { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
 .message { padding: 12px 14px; border-radius: 12px; background: #efe2d5; color: var(--accent-dark); }
 .admin-wrap { width: min(1180px, 94%); margin: 40px auto; }
 .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -44,4 +60,8 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 table { width: 100%; border-collapse: collapse; min-width: 900px; }
 th, td { text-align: left; padding: 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { background: #efe2d5; }
-@media (max-width: 700px) { .grid-two { grid-template-columns: 1fr; } .content { margin-top: -40px; } }
+@media (max-width: 700px) {
+  .grid-two { grid-template-columns: 1fr; }
+  .content { margin-top: -40px; }
+  .calendar-label .rdp-months { flex-direction: column; }
+}
