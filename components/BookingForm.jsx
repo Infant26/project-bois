@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { supabase } from '@/lib/supabaseClient';
 import { nightsBetween } from '@/lib/bookingRules';
+import { sendOwnerBookingRequestEmailClient } from '@/lib/email';
 
 function loadRazorpayScript() {
   return new Promise((resolve) => {
@@ -172,6 +173,10 @@ export default function BookingForm() {
 
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || 'Booking failed');
+
+    sendOwnerBookingRequestEmailClient(result.booking).catch((error) => {
+      console.warn('Owner booking request email failed:', error);
+    });
 
     return result.booking;
   }

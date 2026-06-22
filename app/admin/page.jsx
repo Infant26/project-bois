@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { sendGuestBookingConfirmedEmailClient } from '@/lib/email';
 
 export default function AdminPage() {
   const [session, setSession] = useState(null);
@@ -46,6 +47,11 @@ export default function AdminPage() {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Unable to update booking status');
+
+      if (status === 'confirmed' && result.booking) {
+        await sendGuestBookingConfirmedEmailClient(result.booking);
+      }
+
       await loadBookings();
       setMessage(result.warning || `Booking ${status} successfully.`);
     } catch (error) {

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import { sendGuestBookingConfirmedEmail } from '@/lib/emailServer';
 
 export async function PATCH(request) {
   try {
@@ -39,18 +38,7 @@ export async function PATCH(request) {
       room_name: data.rooms?.name
     };
 
-    let warning = null;
-
-    if (currentBooking.booking_status !== 'confirmed' && booking_status === 'confirmed') {
-      try {
-        await sendGuestBookingConfirmedEmail(updatedBooking);
-      } catch (emailError) {
-        console.error('Guest confirmation email failed:', emailError);
-        warning = 'Booking confirmed, but confirmation email could not be sent.';
-      }
-    }
-
-    return NextResponse.json({ success: true, booking: updatedBooking, warning });
+    return NextResponse.json({ success: true, booking: updatedBooking });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Unable to update booking status' }, { status: 500 });
