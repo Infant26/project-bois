@@ -1,4 +1,5 @@
 {
+  "root": "room-booking-starter",
   "buildCommand": "npm install && npm run build",
   "installCommand": "npm ci",
   "env": {
