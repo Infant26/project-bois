@@ -47,7 +47,7 @@ export default function AdminPage() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Unable to update booking status');
       await loadBookings();
-      setMessage(`Booking ${status} successfully.`);
+      setMessage(result.warning || `Booking ${status} successfully.`);
     } catch (error) {
       setMessage(error.message);
     }

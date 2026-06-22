@@ -39,13 +39,18 @@ export async function PATCH(request) {
       room_name: data.rooms?.name
     };
 
+    let warning = null;
+
     if (currentBooking.booking_status !== 'confirmed' && booking_status === 'confirmed') {
-      sendGuestBookingConfirmedEmail(updatedBooking).catch((emailError) => {
-        console.warn('Guest confirmation email failed:', emailError);
-      });
+      try {
+        await sendGuestBookingConfirmedEmail(updatedBooking);
+      } catch (emailError) {
+        console.error('Guest confirmation email failed:', emailError);
+        warning = 'Booking confirmed, but confirmation email could not be sent.';
+      }
     }
 
-    return NextResponse.json({ success: true, booking: updatedBooking });
+    return NextResponse.json({ success: true, booking: updatedBooking, warning });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Unable to update booking status' }, { status: 500 });
