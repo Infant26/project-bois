@@ -1,16 +1,4 @@
 {
   "installCommand": "npm ci",
-  "buildCommand": "npm run build",
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-    "NEXT_PUBLIC_EMAILJS_SERVICE_ID": "@next_public_emailjs_service_id",
-    "NEXT_PUBLIC_EMAILJS_TEMPLATE_ID": "@next_public_emailjs_template_id",
-    "NEXT_PUBLIC_EMAILJS_PUBLIC_KEY": "@next_public_emailjs_public_key",
-    "NEXT_PUBLIC_OWNER_EMAIL": "@next_public_owner_email",
-    "NEXT_PUBLIC_PROPERTY_NAME": "@next_public_property_name",
-    "NEXT_PUBLIC_PROPERTY_LOCATION": "@next_public_property_location",
-    "NEXT_PUBLIC_ENABLE_RAZORPAY": "@next_public_enable_razorpay"
-  }
+  "buildCommand": "npm run build"
 }
