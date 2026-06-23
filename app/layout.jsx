@@ -1,5 +1,6 @@
 import './styles.css';
 import 'react-day-picker/dist/style.css';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: 'The Coastal Calm | Private Stay Booking',
@@ -12,7 +13,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
