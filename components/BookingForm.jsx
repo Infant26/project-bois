@@ -56,6 +56,8 @@ export default function BookingForm() {
   const [message, setMessage] = useState('');
   const [dateError, setDateError] = useState('');
   const [loading, setLoading] = useState(false);
+    const [calendarOpen, setCalendarOpen] = useState(false);
+    const [calendarField, setCalendarField] = useState(null); // 'check_in' or 'check_out'
 
   const enableRazorpay = process.env.NEXT_PUBLIC_ENABLE_RAZORPAY === 'true';
   const selectedRoom = rooms.find((room) => String(room.id) === String(form.room_id));
@@ -142,6 +144,16 @@ export default function BookingForm() {
   function updateField(event) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   }
+
+    function openCalendar(field) {
+      setCalendarField(field);
+      setCalendarOpen(true);
+    }
+
+    function closeCalendar() {
+      setCalendarOpen(false);
+      setCalendarField(null);
+    }
 
   function updateDateRange(range) {
     if (!range?.from) {
@@ -274,13 +286,13 @@ export default function BookingForm() {
       </label>
       <div className="grid-two">
         <label>Check-in
-          <input type="date" name="check_in_date" value={form.check_in_date} onChange={updateField} required readOnly />
+           <input type="date" name="check_in_date" value={form.check_in_date} onChange={updateField} onClick={() => openCalendar('check_in')} required readOnly className="date-input-clickable" />
         </label>
         <label>Check-out
-          <input type="date" name="check_out_date" value={form.check_out_date} onChange={updateField} required readOnly />
+           <input type="date" name="check_out_date" value={form.check_out_date} onChange={updateField} onClick={() => openCalendar('check_out')} required readOnly className="date-input-clickable" />
         </label>
       </div>
-      <div className="calendar-inline-wrap">
+        <div style={{ display: 'none' }}>
         <DayPicker
           mode="range"
           numberOfMonths={1}
@@ -320,6 +332,42 @@ export default function BookingForm() {
         {loading ? 'Processing...' : enableRazorpay ? 'Pay & Reserve' : 'Reserve Now'}
       </button>
       {(message || dateError) && <p className="message">{dateError || message}</p>}
+
+        {calendarOpen && (
+          <div className="calendar-modal-overlay" onClick={closeCalendar}>
+            <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="calendar-modal-header">
+                <h3>{calendarField === 'check_in' ? 'Select check-in date' : 'Select check-out date'}</h3>
+                <button
+                  type="button"
+                  className="calendar-close-btn"
+                  onClick={closeCalendar}
+                  aria-label="Close calendar"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="calendar-modal-body">
+                <DayPicker
+                  mode="range"
+                  numberOfMonths={1}
+                  selected={selectedDateRange}
+                  onSelect={updateDateRange}
+                  disabled={disabledDateMatchers}
+                  modifiersClassNames={{
+                    disabled: 'rdp-day-blocked'
+                  }}
+                  required
+                />
+              </div>
+              <div className="calendar-modal-footer">
+                <button type="button" onClick={closeCalendar} className="calendar-done-btn">
+                  Done
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
     </form>
   );
 }

@@ -41,6 +41,92 @@ textarea { resize: vertical; }
   background: #f3ece5;
   cursor: not-allowed;
 }
+  .date-input-clickable {
+    cursor: pointer;
+  }
+  .date-input-clickable:hover {
+    border-color: var(--accent);
+  }
+  .calendar-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(47, 37, 31, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .calendar-modal {
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(47, 37, 31, 0.3);
+    padding: 0;
+    max-width: 480px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+  .calendar-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .calendar-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--text);
+  }
+  .calendar-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .calendar-close-btn:hover {
+    background: #f0ebe3;
+    color: var(--text);
+  }
+  .calendar-modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    max-height: 500px;
+  }
+  .calendar-modal-body .rdp-root {
+    --rdp-accent-color: var(--accent);
+    --rdp-accent-background-color: #efe2d5;
+    margin: 0 auto;
+  }
+  .calendar-modal-body .rdp-day_button {
+    border-radius: 999px;
+  }
+  .calendar-modal-body .rdp-day-blocked .rdp-day_button {
+    color: #9f8b7c;
+    background: #f3ece5;
+    cursor: not-allowed;
+  }
+  .calendar-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+  }
+  .calendar-done-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
 .price-box { display: flex; justify-content: space-between; align-items: center; border: 1px dashed var(--accent); padding: 16px; border-radius: 16px; margin: 18px 0; background: #fff5e8; }
 .price-box strong { font-size: 24px; }
 button { border: 0; border-radius: 999px; padding: 14px 22px; background: var(--accent); color: white; font-weight: 800; cursor: pointer; }
