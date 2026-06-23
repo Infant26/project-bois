@@ -40,6 +40,8 @@ function addDays(date, days) {
   return next;
 }
 
+const PROPERTY_NAME = 'The Coastal Calm';
+
 export default function BookingForm() {
   const [rooms, setRooms] = useState([]);
   const [blockedRanges, setBlockedRanges] = useState([]);
@@ -231,7 +233,7 @@ export default function BookingForm() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderResult.order.amount,
         currency: orderResult.order.currency,
-        name: process.env.NEXT_PUBLIC_PROPERTY_NAME,
+        name: PROPERTY_NAME,
         description: selectedRoom?.name || 'Room Booking',
         order_id: orderResult.order.id,
         prefill: {
