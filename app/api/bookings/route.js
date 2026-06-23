@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import { nightsBetween, validateBookingPayload } from '@/lib/bookingRules';
+import { calculateBookingTotal, validateBookingPayload } from '@/lib/bookingRules';
 import { sendOwnerBookingRequestEmail } from '@/lib/emailServer';
 import { getBookingReference } from '@/lib/bookingReference';
 
@@ -37,8 +37,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Selected dates are already reserved for this room' }, { status: 409 });
     }
 
-    const nights = nightsBetween(payload.check_in_date, payload.check_out_date);
-    const totalAmount = nights * Number(room.price_per_night);
+    const totalAmount = calculateBookingTotal(payload.check_in_date, payload.check_out_date, room.price_per_night);
 
     const bookingToInsert = {
       room_id: payload.room_id,

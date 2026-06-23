@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import { nightsBetween, validateBookingPayload } from '@/lib/bookingRules';
+import { calculateBookingTotal, validateBookingPayload } from '@/lib/bookingRules';
 
 export async function POST(request) {
   try {
@@ -19,8 +19,7 @@ export async function POST(request) {
 
     if (error || !room) return NextResponse.json({ error: 'Room not found' }, { status: 404 });
 
-    const nights = nightsBetween(payload.check_in_date, payload.check_out_date);
-    const totalAmount = nights * Number(room.price_per_night);
+    const totalAmount = calculateBookingTotal(payload.check_in_date, payload.check_out_date, room.price_per_night);
 
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,

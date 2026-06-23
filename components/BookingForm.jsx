@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { supabase } from '@/lib/supabaseClient';
-import { nightsBetween } from '@/lib/bookingRules';
+import { calculateBookingTotal, nightsBetween, weekendNightsBetween } from '@/lib/bookingRules';
 import { sendOwnerBookingRequestEmailClient } from '@/lib/email';
 import { getBookingReference } from '@/lib/bookingReference';
 
@@ -42,6 +42,7 @@ function addDays(date, days) {
 }
 
 const PROPERTY_NAME = 'The Coastal Calm';
+const WEEKEND_SURCHARGE_PER_NIGHT = 1000;
 
 export default function BookingForm() {
   const [rooms, setRooms] = useState([]);
@@ -65,7 +66,13 @@ export default function BookingForm() {
   const enableRazorpay = process.env.NEXT_PUBLIC_ENABLE_RAZORPAY === 'true';
   const selectedRoom = rooms.find((room) => String(room.id) === String(form.room_id));
   const nights = form.check_in_date && form.check_out_date ? nightsBetween(form.check_in_date, form.check_out_date) : 0;
-  const total = selectedRoom && nights > 0 ? nights * Number(selectedRoom.price_per_night) : 0;
+  const weekendNights = form.check_in_date && form.check_out_date
+    ? weekendNightsBetween(form.check_in_date, form.check_out_date)
+    : 0;
+  const weekendSurchargeTotal = weekendNights * WEEKEND_SURCHARGE_PER_NIGHT;
+  const total = selectedRoom && nights > 0
+    ? calculateBookingTotal(form.check_in_date, form.check_out_date, selectedRoom.price_per_night)
+    : 0;
   const selectedDateRange = {
     from: parseDateString(form.check_in_date),
     to: parseDateString(form.check_out_date)
@@ -333,6 +340,12 @@ export default function BookingForm() {
         <span>{nights || 0} night(s)</span>
         <strong>₹{total || 0}</strong>
       </div>
+      <p className="price-note">Weekend pricing: Saturday and Sunday nights include an extra ₹1000 per night.</p>
+      {weekendNights > 0 && (
+        <p className="price-note-highlight">
+          Included surcharge: ₹{weekendSurchargeTotal} ({weekendNights} weekend night{weekendNights > 1 ? 's' : ''} × ₹{WEEKEND_SURCHARGE_PER_NIGHT})
+        </p>
+      )}
       <button disabled={loading || !form.room_id || !!dateError}>
         {loading ? 'Processing...' : enableRazorpay ? 'Pay & Reserve' : 'Reserve Now'}
       </button>
