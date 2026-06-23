@@ -33,4 +33,12 @@
     <ellipse cx="800" cy="540" rx="170" ry="14" />
     <ellipse cx="805" cy="592" rx="235" ry="16" />
   </g>
+
+  <g transform="translate(1410 535)">
+    <ellipse cx="0" cy="52" rx="72" ry="10" fill="#f1f6e6" opacity="0.28" />
+    <path d="M-86 32h172l-24 26h-122z" fill="#3f4e2a" opacity="0.9" />
+    <rect x="-2" y="-24" width="4" height="56" fill="#2f3c1f" />
+    <path d="M2-20 2 26 42 18Z" fill="#eef4de" opacity="0.88" />
+    <path d="M-2-16-2 22-36 14Z" fill="#dbe8c7" opacity="0.75" />
+  </g>
 </svg>

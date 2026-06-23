@@ -10,7 +10,7 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: radial-gradient(circle at 8% 5%, #fbfdf5 0%, var(--bg) 38%), var(--bg); color: var(--text); }
-.hero { min-height: 340px; display: flex; align-items: center; padding: 56px 8%; background: linear-gradient(120deg, rgba(38,49,27,.62), rgba(127,149,80,.34)), url('/calm-sea-hero.svg'); background-size: cover; background-position: center; color: white; }
+.hero { min-height: 340px; display: flex; align-items: center; padding: 56px 8%; background: linear-gradient(120deg, rgba(38,49,27,.62), rgba(127,149,80,.34)), url('/calm-sea-hero.svg?v=3'); background-size: cover; background-position: center; color: white; }
 .hero h1 { font-size: clamp(40px, 7vw, 82px); margin: 8px 0; letter-spacing: -2px; }
 .hero p { max-width: 640px; line-height: 1.6; }
 .eyebrow { text-transform: uppercase; letter-spacing: 3px; font-size: 13px; }
