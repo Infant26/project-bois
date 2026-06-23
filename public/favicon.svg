@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="The Coastal Calm favicon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#caa17d" />
+      <stop offset="100%" stop-color="#7d5a44" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <path d="M11 41c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3" fill="none" stroke="#fff7ef" stroke-width="3" stroke-linecap="round" />
+  <path d="M11 48c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3" fill="none" stroke="#fff7ef" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+  <text x="32" y="27" text-anchor="middle" font-size="20" font-family="Georgia, serif" fill="#fff7ef" font-weight="700">C</text>
+</svg>

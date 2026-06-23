@@ -2,8 +2,11 @@ import './styles.css';
 import 'react-day-picker/dist/style.css';
 
 export const metadata = {
-  title: 'Room Booking',
-  description: 'Single-property room booking website'
+  title: 'The Coastal Calm | Private Stay Booking',
+  description: 'Book your stay at The Coastal Calm in Pondicherry.',
+  icons: {
+    icon: '/favicon.svg'
+  }
 };
 
 export default function RootLayout({ children }) {
