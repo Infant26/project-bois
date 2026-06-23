@@ -64,8 +64,8 @@ textarea { resize: vertical; }
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(47, 37, 31, 0.3);
     padding: 0;
-    max-width: 480px;
-    width: 90%;
+    max-width: 560px;
+    width: min(560px, calc(100vw - 32px));
     display: flex;
     flex-direction: column;
   }
@@ -100,14 +100,29 @@ textarea { resize: vertical; }
     color: var(--text);
   }
   .calendar-modal-body {
-    padding: 20px 24px;
-    overflow-y: auto;
-    max-height: 500px;
+    padding: 20px 24px 12px;
+    overflow: hidden;
   }
   .calendar-modal-body .rdp-root {
     --rdp-accent-color: var(--accent);
     --rdp-accent-background-color: #efe2d5;
+    --rdp-day-width: 48px;
+    --rdp-day-height: 48px;
+    --rdp-day_button-width: 40px;
+    --rdp-day_button-height: 40px;
     margin: 0 auto;
+  }
+  .calendar-modal-body .rdp-months {
+    justify-content: center;
+    max-width: none;
+  }
+  .calendar-modal-body .rdp-month_grid {
+    width: auto;
+    min-width: 0;
+  }
+  .calendar-modal-body .rdp-weekday,
+  .calendar-modal-body .rdp-day {
+    text-align: center;
   }
   .calendar-modal-body .rdp-day_button {
     border-radius: 999px;
@@ -146,4 +161,16 @@ th { background: #efe2d5; }
 @media (max-width: 700px) {
   .grid-two { grid-template-columns: 1fr; }
   .content { margin-top: -40px; }
+  .calendar-modal-header,
+  .calendar-modal-body,
+  .calendar-modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .calendar-modal-body .rdp-root {
+    --rdp-day-width: 42px;
+    --rdp-day-height: 42px;
+    --rdp-day_button-width: 36px;
+    --rdp-day_button-height: 36px;
+  }
 }
