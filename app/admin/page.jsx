@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { sendGuestBookingConfirmedEmailClient } from '@/lib/email';
+import { getBookingReference } from '@/lib/bookingReference';
 
 export default function AdminPage() {
   const [session, setSession] = useState(null);
@@ -88,12 +89,13 @@ export default function AdminPage() {
         <table>
           <thead>
             <tr>
-              <th>Room</th><th>Guest</th><th>Dates</th><th>Guests</th><th>Amount</th><th>Status</th><th>Payment</th><th>Contact</th><th>Actions</th>
+              <th>Ref</th><th>Room</th><th>Guest</th><th>Dates</th><th>Guests</th><th>Amount</th><th>Status</th><th>Payment</th><th>Contact</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {bookings.map((booking) => (
               <tr key={booking.id}>
+                <td>{getBookingReference(booking)}</td>
                 <td>{booking.rooms?.name}</td>
                 <td>{booking.guest_name}</td>
                 <td>{booking.check_in_date} → {booking.check_out_date}</td>

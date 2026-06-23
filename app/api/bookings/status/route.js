@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
+import { getBookingReference } from '@/lib/bookingReference';
 
 export async function PATCH(request) {
   try {
@@ -35,7 +36,8 @@ export async function PATCH(request) {
 
     const updatedBooking = {
       ...data,
-      room_name: data.rooms?.name
+      room_name: data.rooms?.name,
+      booking_reference: getBookingReference(data)
     };
 
     return NextResponse.json({ success: true, booking: updatedBooking });

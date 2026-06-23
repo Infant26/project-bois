@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 import { nightsBetween, validateBookingPayload } from '@/lib/bookingRules';
 import { sendOwnerBookingRequestEmail } from '@/lib/emailServer';
+import { getBookingReference } from '@/lib/bookingReference';
 
 export async function POST(request) {
   try {
@@ -65,7 +66,8 @@ export async function POST(request) {
 
     const bookingWithRoomName = {
       ...booking,
-      room_name: booking.rooms?.name
+      room_name: booking.rooms?.name,
+      booking_reference: getBookingReference(booking)
     };
 
     sendOwnerBookingRequestEmail(bookingWithRoomName).catch((emailError) => {

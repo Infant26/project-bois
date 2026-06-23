@@ -5,6 +5,7 @@ import { DayPicker } from 'react-day-picker';
 import { supabase } from '@/lib/supabaseClient';
 import { nightsBetween } from '@/lib/bookingRules';
 import { sendOwnerBookingRequestEmailClient } from '@/lib/email';
+import { getBookingReference } from '@/lib/bookingReference';
 
 function loadRazorpayScript() {
   return new Promise((resolve) => {
@@ -204,7 +205,8 @@ export default function BookingForm() {
         payment_status: 'pay_at_property',
         booking_status: 'pending'
       });
-      setMessage(`Booking request sent. Reference: ${booking.id}. You will receive confirmation after approval.`);
+      const bookingReference = getBookingReference(booking);
+      setMessage(`Booking request sent. Reference: ${bookingReference}. You will receive confirmation after approval.`);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -256,7 +258,8 @@ export default function BookingForm() {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id
           });
-          setMessage(`Payment received. Booking request submitted. Reference: ${booking.id}`);
+          const bookingReference = getBookingReference(booking);
+          setMessage(`Payment received. Booking request submitted. Reference: ${bookingReference}`);
           setLoading(false);
         },
         modal: {
