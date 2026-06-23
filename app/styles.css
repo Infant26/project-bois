@@ -1,26 +1,27 @@
 :root {
-  --bg: #f6f0e8;
-  --card: #fffaf3;
-  --text: #2f251f;
-  --muted: #76665b;
-  --accent: #7d5a44;
-  --accent-dark: #563a2a;
-  --border: #e1d1c2;
+  --bg: #f6f8ef;
+  --card: #fdfef8;
+  --text: #243020;
+  --muted: #667358;
+  --accent: #7f9550;
+  --accent-dark: #5f7339;
+  --border: #d5dec5;
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); }
-.hero { min-height: 340px; display: flex; align-items: center; padding: 56px 8%; background: linear-gradient(120deg, rgba(47,37,31,.85), rgba(125,90,68,.55)), url('/property-hero.jpg'); background-size: cover; background-position: center; color: white; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: radial-gradient(circle at 8% 5%, #fbfdf5 0%, var(--bg) 38%), var(--bg); color: var(--text); }
+.hero { min-height: 340px; display: flex; align-items: center; padding: 56px 8%; background: linear-gradient(120deg, rgba(38,49,27,.62), rgba(127,149,80,.34)), url('/calm-sea-hero.svg'); background-size: cover; background-position: center; color: white; }
 .hero h1 { font-size: clamp(40px, 7vw, 82px); margin: 8px 0; letter-spacing: -2px; }
 .hero p { max-width: 640px; line-height: 1.6; }
 .eyebrow { text-transform: uppercase; letter-spacing: 3px; font-size: 13px; }
 .hero-copy { font-size: 18px; }
 .content { width: min(980px, 92%); margin: -70px auto 60px; position: relative; }
-.booking-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 28px; box-shadow: 0 18px 45px rgba(47,37,31,.12); }
+.booking-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 28px; box-shadow: 0 18px 45px rgba(31,42,30,.16); }
 .booking-card.small { max-width: 420px; margin: 0 auto; }
 .booking-card h2 { margin-top: 0; }
 label { display: flex; flex-direction: column; gap: 8px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
-input, select, textarea { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; background: white; font: inherit; color: var(--text); }
+input, select, textarea { border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; background: #ffffff; font: inherit; color: var(--text); }
+input:focus, select:focus, textarea:focus { outline: 2px solid rgba(127,149,80,0.28); outline-offset: 1px; border-color: var(--accent); }
 textarea { resize: vertical; }
 .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .calendar-inline-wrap {
@@ -33,12 +34,12 @@ textarea { resize: vertical; }
 }
 .calendar-inline-wrap .rdp-root {
   --rdp-accent-color: var(--accent);
-  --rdp-accent-background-color: #efe2d5;
+  --rdp-accent-background-color: #e8efd5;
 }
 .calendar-inline-wrap .rdp-day_button { border-radius: 999px; }
 .calendar-inline-wrap .rdp-day-blocked .rdp-day_button {
-  color: #9f8b7c;
-  background: #f3ece5;
+  color: #8f9a82;
+  background: #eff4e3;
   cursor: not-allowed;
 }
   .date-input-clickable {
@@ -53,7 +54,7 @@ textarea { resize: vertical; }
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(47, 37, 31, 0.5);
+    background: rgba(28, 37, 21, 0.48);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,7 +63,7 @@ textarea { resize: vertical; }
   .calendar-modal {
     background: var(--card);
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(47, 37, 31, 0.3);
+    box-shadow: 0 24px 64px rgba(36, 48, 32, 0.28);
     padding: 0;
     max-width: 560px;
     width: min(560px, calc(100vw - 32px));
@@ -96,7 +97,7 @@ textarea { resize: vertical; }
     border-radius: 50%;
   }
   .calendar-close-btn:hover {
-    background: #f0ebe3;
+    background: #ecf2dd;
     color: var(--text);
   }
   .calendar-modal-body {
@@ -105,7 +106,7 @@ textarea { resize: vertical; }
   }
   .calendar-modal-body .rdp-root {
     --rdp-accent-color: var(--accent);
-    --rdp-accent-background-color: #efe2d5;
+    --rdp-accent-background-color: #e8efd5;
     --rdp-day-width: 48px;
     --rdp-day-height: 48px;
     --rdp-day_button-width: 40px;
@@ -128,8 +129,8 @@ textarea { resize: vertical; }
     border-radius: 999px;
   }
   .calendar-modal-body .rdp-day-blocked .rdp-day_button {
-    color: #9f8b7c;
-    background: #f3ece5;
+    color: #8f9a82;
+    background: #eff4e3;
     cursor: not-allowed;
   }
   .calendar-modal-footer {
@@ -142,12 +143,12 @@ textarea { resize: vertical; }
     padding: 12px 24px;
     font-size: 14px;
   }
-.price-box { display: flex; justify-content: space-between; align-items: center; border: 1px dashed var(--accent); padding: 16px; border-radius: 16px; margin: 18px 0; background: #fff5e8; }
+.price-box { display: flex; justify-content: space-between; align-items: center; border: 1px dashed var(--accent); padding: 16px; border-radius: 16px; margin: 18px 0; background: #f5f9e8; }
 .price-box strong { font-size: 24px; }
 button { border: 0; border-radius: 999px; padding: 14px 22px; background: var(--accent); color: white; font-weight: 800; cursor: pointer; }
 button:hover { background: var(--accent-dark); }
 button:disabled { opacity: .6; cursor: not-allowed; }
-.message { padding: 12px 14px; border-radius: 12px; background: #efe2d5; color: var(--accent-dark); }
+.message { padding: 12px 14px; border-radius: 12px; background: #ecf2dc; color: var(--accent-dark); }
 .admin-wrap { width: min(1180px, 94%); margin: 40px auto; }
 .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .admin-actions button { padding: 8px 12px; border-radius: 999px; font-size: 13px; }
@@ -157,7 +158,7 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 .table-wrap { overflow-x: auto; background: var(--card); border-radius: 18px; border: 1px solid var(--border); }
 table { width: 100%; border-collapse: collapse; min-width: 900px; }
 th, td { text-align: left; padding: 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-th { background: #efe2d5; }
+th { background: #e9efda; }
 @media (max-width: 700px) {
   .grid-two { grid-template-columns: 1fr; }
   .content { margin-top: -40px; }
