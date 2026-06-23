@@ -68,7 +68,7 @@ export default function BookingForm() {
   const total = selectedRoom && nights > 0 ? nights * Number(selectedRoom.price_per_night) : 0;
   const selectedDateRange = {
     from: parseDateString(form.check_in_date),
-    to: form.check_out_date ? addDays(parseDateString(form.check_out_date), -1) : undefined
+    to: parseDateString(form.check_out_date)
   };
 
   const today = new Date();
@@ -171,7 +171,7 @@ export default function BookingForm() {
     setForm((current) => ({
       ...current,
       check_in_date: formatDateString(range.from),
-      check_out_date: range.to ? formatDateString(addDays(range.to, 1)) : ''
+      check_out_date: range.to ? formatDateString(range.to) : ''
     }));
   }
 
